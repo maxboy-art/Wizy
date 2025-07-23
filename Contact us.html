@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact & Rating - World Plate Restaurant</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: url('all.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .form-box {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      margin: 50px auto;
+      box-shadow: 0 0 15px rgba(255, 187, 0, 0.4);
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffbb00;
+      margin-bottom: 20px;
+    }
+
+    label {
+      margin-top: 15px;
+      display: block;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #ffbb00;
+      color: #000;
+      border: none;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e6a800;
+    }
+
+    .info {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Rating Section */
+    .rating-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+      color: #333;
+      text-align: center;
+    }
+
+    .rating-section h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .stars {
+      direction: rtl;
+      display: inline-flex;
+      font-size: 30px;
+      gap: 5px;
+    }
+
+    .stars input {
+      display: none;
+    }
+
+    .stars label {
+      color: #ccc;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .stars input:checked ~ label,
+    .stars label:hover,
+    .stars label:hover ~ label {
+      color: gold;
+    }
+
+    .rating-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Combined Contact + Rating Form -->
+  <div class="form-box">
+    <h2>Contact & Rate Us 🍽️</h2>
+    <form action="https://formspree.io/f/movljbjd" method="POST">
+      <!-- Contact Section -->
+      <label for="name">Your Name:</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required>
+
+      <label for="email">Your Email:</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+      <label for="message">Your Message:</label>
+      <textarea id="message" name="message" rows="5" placeholder="Tell us what you think about our food..." required></textarea>
+
+      <!-- Rating Section -->
+      <div class="rating-section">
+        <h3>Rate Our Restaurant</h3>
+        <div class="stars">
+          <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+          <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+          <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+          <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+          <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+        </div>
+
+        <textarea name="ratingFeedback" rows="4" placeholder="Leave your feedback..."></textarea>
+      </div>
+
+      <!-- One Submit Button for Everything -->
+      <button type="submit">Send Message & Rating</button>
+    </form>
+
+    <div class="info">
+      Thank you for your feedback and support! 💛
+    </div>
+  </div>
+
+</body>
+</html>

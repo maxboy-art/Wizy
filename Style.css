@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    color:black;
+    background-image:url('igbo0.;g');
+    background-size:cover;
+    color: #333;
+  
+    padding: 20px;
+}
+
+h1 {
+    color: white;
+}
+
+h2 {
+    color: #2980b9;
+}
+
+a {
+    color: #27ae60;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 5px 0;
+}
+
+p {
+    line-height: 1.6;
+    max-width: 600px;
+}.menu-item {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 15px;
+  margin: 20px 0;
+  max-width: 400px;
+  box-shadow: 2px 2px 5px #ccc;
+}
+
+.menu-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.menu-item h3 {
+  margin: 10px 0 5px 0;
+}
+
+.menu-item p {
+  margin: 0;
+}body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 30px;
+  max
