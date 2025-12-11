@@ -1,0 +1,95 @@
+<!DOCTYPE html><html>
+<head>
+<meta charset="utf-8">
+<title>Fun Hub v2 (Upgraded)</title>
+<style>
+body{font-family:Arial;background:#111;color:#fff;padding:20px;text-align:center;overflow-x:hidden}
+.section{background:#1e1e1e;margin:15px auto;padding:15px;border-radius:10px;max-width:500px}
+button,input{padding:10px;margin:5px;border:none;border-radius:6px;font-size:15px}
+#out{background:#000;height:180px;overflow:auto;padding:10px;border-radius:8px}
+.emoji{position:fixed;top:-50px;font-size:28px;animation:fall 3s linear forwards}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
+canvas{border:1px solid #555;border-radius:8px;display:block;margin:10px auto}
+</style>
+</head>
+<body>
+<h2>🔥 Fun Hub v2 (Upgraded)</h2><div class="section">
+<h3>Message Repeater</h3>
+<input id="msg" placeholder="Type message">
+<button onclick="startSpam()">Start</button>
+<button onclick="stopSpam()">Stop</button>
+<div id="out"></div>
+</div><div class="section">
+<h3>Typewriter</h3>
+<input id="typeText" placeholder="Type text">
+<button onclick="typeWriter()">Run</button>
+<p id="typeResult"></p>
+</div><div class="section">
+<h3>Emoji Rain</h3>
+<button onclick="emojiRain()">Start Rain 🌈</button>
+</div><div class="section">
+<h3>Click Game (5 s)</h3>
+<button onclick="startGame()">Start</button>
+<button id="clicker" onclick="clickNow()" disabled>Click!</button>
+<p id="score">Score: 0</p>
+</div><div class="section">
+<h3>Vibration Test</h3>
+<button onclick="navigator.vibrate(200)">Vibrate ⚡</button>
+</div><div class="section">
+<h3>Background Color Changer</h3>
+<button onclick="startColorChange()">Start Colors</button>
+<button onclick="stopColorChange()">Stop</button>
+</div><div class="section">
+<h3>Paint Board</h3>
+<canvas id="paintCanvas" width="360" height="240"></canvas>
+<label>Brush Color: <input type="color" id="col" value="#00ff00"></label>
+<label>Brush Size: <input type="range" id="size" min="1" max="40" value="4"></label>
+<button onclick="clearPaint()">Clear</button>
+</div><div class="section">
+<h3>Mini Music Player</h3>
+<button onclick="playTone()">Play Tone</button>
+<button onclick="stopTone()">Stop</button>
+<button onclick="playMelody()">Play Melody</button>
+</div><div class="section">
+<h3>Slot Machine</h3>
+<div id="slotOut" style="font-size:30px;margin:10px 0">🎉 🎉 🎉</div>
+<button onclick="spinSlot()">Spin</button>
+</div><script>
+/* message repeater */
+let spamInt;
+function startSpam(){ const t=document.getElementById('msg').value; if(!t)return alert('Enter message!'); stopSpam(); spamInt=setInterval(()=>{ const p=document.createElement('p'); p.textContent=t; const box=document.getElementById('out'); box.appendChild(p); box.scrollTop=box.scrollHeight; },200);}
+function stopSpam(){clearInterval(spamInt);}
+
+/* typewriter */
+async function typeWriter(){ const text=document.getElementById('typeText').value; const out=document.getElementById('typeResult'); out.textContent=''; for(let ch of text){ out.textContent+=ch; await new Promise(r=>setTimeout(r,70)); } }
+
+/* emoji rain */
+function emojiRain(){ const list=["😂","🔥","❤️","💀","💫","✨","⚡","😎","🌈","🎉"]; const e=document.createElement("div"); e.textContent=list[Math.floor(Math.random()*list.length)]; e.className="emoji"; e.style.left=Math.random()*90+"%"; document.body.appendChild(e); setTimeout(()=>e.remove(),3000);}
+
+/* click game */
+let clicks=0,active=false;
+function startGame(){ clicks=0;active=true; document.getElementById("clicker").disabled=false; setTimeout(()=>{ active=false; document.getElementById("clicker").disabled=true; alert("Time up! Score: "+clicks); },5000);}
+function clickNow(){ if(active){clicks++; document.getElementById("score").textContent="Score: "+clicks;} }
+
+/* background color changer */
+let colorInterval=null;
+function startColorChange(){stopColorChange(); colorInterval=setInterval(()=>{ const r=Math.floor(Math.random()*255); const g=Math.floor(Math.random()*255); const b=Math.floor(Math.random()*255); document.body.style.background=`rgb(${r},${g},${b})`; },300);}
+function stopColorChange(){clearInterval(colorInterval);}
+
+/* paint board */
+const pcanvas=document.getElementById('paintCanvas'); const pctx=pcanvas.getContext('2d'); let drawing=false, last={x:0,y:0};
+pcanvas.addEventListener('pointerdown', e=>{drawing=true; last={x:e.offsetX, y:e.offsetY};});
+pcanvas.addEventListener('pointermove', e=>{if(!drawing) return; const col=document.getElementById('col').value; const sz=document.getElementById('size').value; pctx.strokeStyle=col; pctx.lineWidth=sz; pctx.lineCap='round'; pctx.beginPath(); pctx.moveTo(last.x,last.y); pctx.lineTo(e.offsetX,e.offsetY); pctx.stroke(); last={x:e.offsetX,y:e.offsetY};});
+pcanvas.addEventListener('pointerup', ()=>drawing=false); pcanvas.addEventListener('pointerleave', ()=>drawing=false);
+function clearPaint(){pctx.clearRect(0,0,pcanvas.width,pcanvas.height);}
+
+/* mini music player */
+const audioCtx = new (window.AudioContext||window.webkitAudioContext)(); let osc=null;
+function playTone(freq=440){ if(osc) return; osc=audioCtx.createOscillator(); const gain=audioCtx.createGain(); osc.type='sine'; osc.frequency.value=freq; gain.gain.value=0.08; osc.connect(gain); gain.connect(audioCtx.destination); osc.start();}
+function stopTone(){ if(osc){osc.stop(); osc.disconnect(); osc=null;} }
+function playMelody(){ const notes=[440,494,523,587,659,698,784]; let i=0; const id=setInterval(()=>{ if(i>=notes.length){ clearInterval(id); stopTone(); return;} stopTone(); playTone(notes[i]); i++; },350);}
+
+/* slot machine */
+function spinSlot(){const symbols=['🎉','🍀','⭐','🔥','🍎','🍩','🎲']; const a=symbols[Math.floor(Math.random()*symbols.length)]; const b=symbols[Math.floor(Math.random()*symbols.length)]; const c=symbols[Math.floor(Math.random()*symbols.length)]; document.getElementById('slotOut').innerText=`${a} ${b} ${c}`; if(a===b && b===c){emojiRain(); alert('Jackpot! 🎉');}}
+</script></body>
+</html>
